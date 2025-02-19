@@ -62,24 +62,27 @@ final class LedgerController extends BaseApiController
 
         $errors = $validator->validate($dto);
         if (count($errors) > 0) {
-            return $this->json($this->formatValidationErrors($errors), JsonResponse::HTTP_BAD_REQUEST);
+            return $this->json(
+                ['errors' => $this->formatValidationErrors($errors)],
+                JsonResponse::HTTP_BAD_REQUEST
+            );
         }
 
-        $command = new CreateLedgerCommand($dto->initialCurrency);
-        $ledger = $createLedgerHandler->handle($command);
+        try {
+            $command = new CreateLedgerCommand($dto->initialCurrency);
+            $ledger = $createLedgerHandler->handle($command);
+        } catch (\Exception $e) {
+            return $this->json(
+                ['error' => $e->getMessage()],
+                JsonResponse::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
 
         $responseDTO = $transformer->transform($ledger);
+
         return $this->json(
             $responseDTO,
             JsonResponse::HTTP_CREATED
         );
     }
-
-//    #[Route('/api/ledgers', name: 'app_api_ledger', methods: ['POST'])]
-//    public function index(): Response
-//    {
-//        return $this->render('api/ledger/index.html.twig', [
-//            'controller_name' => 'LedgerController',
-//        ]);
-//    }
 }

@@ -7,6 +7,9 @@ if [ -z "$(ls -A /var/www/app)" ]; then
 #    composer require ramsey/uuid-doctrine
 #    composer require nelmio/api-doc-bundle
 
+#    php bin/console doctrine:migrations:migrate
+#    php bin/console doctrine:migrations:migrate --env=test
+
 fi
 
 exec php-fpm

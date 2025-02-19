@@ -13,7 +13,10 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN curl -sS https://get.symfony.com/cli/installer | bash && \
     mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
 
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+
 COPY conf.d/custom.ini /usr/local/etc/php/conf.d/custom.ini
+COPY conf.d/xdebug.ini /usr/local/etc/php/conf.d/
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh

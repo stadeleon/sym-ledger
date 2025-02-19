@@ -28,6 +28,9 @@ when@test:
         dbal:
             # "TEST_TOKEN" is typically set by ParaTest
             dbname_suffix: '_test%env(default::TEST_TOKEN)%'
+            url: 'postgresql://symfony:secret@postgres:5432/symfony?serverVersion=15&charset=utf8'
+#            url: 'pgsql://test_user:test_password@postgres:5432/test_database'
+#            url: 'sqlite:///:memory:'
 
 when@prod:
     doctrine:
