@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\CurrencyEnum;
 use App\Repository\LedgerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -18,8 +19,8 @@ class Ledger
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
     private ?string $id = null;
 
-    #[ORM\Column(length: 3)]
-    private ?string $initialCurrency = null;
+    #[ORM\Column(length: 3, enumType: CurrencyEnum::class)]
+    private ?CurrencyEnum $initialCurrency = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -42,7 +43,7 @@ class Ledger
         $this->ledgerBalances = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -54,12 +55,12 @@ class Ledger
         return $this;
     }
 
-    public function getInitialCurrency(): ?string
+    public function getInitialCurrency(): ?CurrencyEnum
     {
         return $this->initialCurrency;
     }
 
-    public function setInitialCurrency(string $initialCurrency): static
+    public function setInitialCurrency(CurrencyEnum $initialCurrency): static
     {
         $this->initialCurrency = $initialCurrency;
 

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\CurrencyEnum;
 use App\Repository\LedgerBalanceRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,13 +21,13 @@ class LedgerBalance
     #[ORM\ManyToOne(inversedBy: 'ledgerBalances')]
     private ?Ledger $ledger = null;
 
-    #[ORM\Column(length: 3)]
-    private ?string $currency = null;
+    #[ORM\Column(length: 3, enumType: CurrencyEnum::class)]
+    private ?CurrencyEnum $currency = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 12, scale: 2)]
     private ?string $balance = null;
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -50,12 +51,12 @@ class LedgerBalance
         return $this;
     }
 
-    public function getCurrency(): ?string
+    public function getCurrency(): ?CurrencyEnum
     {
         return $this->currency;
     }
 
-    public function setCurrency(string $currency): static
+    public function setCurrency(CurrencyEnum $currency): static
     {
         $this->currency = $currency;
 

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\CurrencyEnum;
 use App\Repository\TransactionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -27,13 +28,13 @@ class Transaction
     #[ORM\Column(type: Types::DECIMAL, precision: 12, scale: 2)]
     private ?string $amount = null;
 
-    #[ORM\Column(length: 3)]
-    private ?string $currency = null;
+    #[ORM\Column(length: 3, enumType: CurrencyEnum::class)]
+    private ?CurrencyEnum $currency = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -81,12 +82,12 @@ class Transaction
         return $this;
     }
 
-    public function getCurrency(): ?string
+    public function getCurrency(): ?CurrencyEnum
     {
         return $this->currency;
     }
 
-    public function setCurrency(string $currency): static
+    public function setCurrency(CurrencyEnum $currency): static
     {
         $this->currency = $currency;
 
