@@ -8,5 +8,6 @@ class LedgerResponseDTO
         public readonly string $id,
         public readonly string $initialCurrency,
         public readonly string $createdAt
-    ) {}
+    ) {
+    }
 }

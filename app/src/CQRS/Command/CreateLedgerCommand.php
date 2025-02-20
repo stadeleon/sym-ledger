@@ -2,10 +2,10 @@
 
 namespace App\CQRS\Command;
 
-class CreateLedgerCommand
+readonly class CreateLedgerCommand
 {
     public function __construct(
-        public readonly string $initialCurrency
+        public string $initialCurrency
     ) {
     }
 }
